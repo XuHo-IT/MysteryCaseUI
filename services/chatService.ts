@@ -1,7 +1,7 @@
 
 import * as signalR from "@microsoft/signalr";
 
-const API_BASE_URL = "http://localhost:5000"; // Replace with your backend API URL
+const API_BASE_URL = "https://localhost:7029"; // Backend API URL
 
 interface ChatMessage {
     username: string;

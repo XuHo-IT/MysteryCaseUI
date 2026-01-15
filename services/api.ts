@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://localhost:7029/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://localhost:7029';
 
 // Types for API requests and responses
 export interface RegisterRequest {
@@ -109,7 +109,7 @@ export interface SubmitInferenceRequest {
   additionalNotes: string | null;
 }
 
-export interface SubmitInferenceResponse {
+export interface PlayerInference {
   id: string;
   suspectedPerpetrator: string;
   perpetrationReasoning: string;
@@ -120,6 +120,75 @@ export interface SubmitInferenceResponse {
   inferenceStatus: string;
   isCorrect: boolean;
   pointsEarned: number;
+}
+
+// Evidence types
+export interface VictimDiary {
+  id: string;
+  title: string;
+  content: string;
+  diaryDate: string;
+  postedAt: string;
+  entryNumber: number;
+}
+
+export interface Fingerprint {
+  id: string;
+  fingerprintId: string;
+  imageUrl: string;
+  fingerprintDetails: string;
+  matchingSuspects: string[];
+  classification: string;
+  isFromCriminalDatabase: boolean;
+  sourceDescription: string;
+}
+
+export interface KeyMoment {
+  timestampSeconds: number;
+  description: string;
+}
+
+export interface SecurityFootage {
+  id: string;
+  footageId: string;
+  videoUrl: string;
+  recordingDate: string;
+  postedAt: string;
+  cameraLocation: string;
+  cameraId: string;
+  description: string;
+  durationSeconds: number;
+  keyMoments: KeyMoment[];
+}
+
+export interface WitnessStatement {
+  id: string;
+  statementId: string;
+  witnessName: string;
+  witnessRole: string;
+  textContent: string;
+  audioUrl: string | null;
+  statementDate: string;
+  postedAt: string;
+  reliability: string;
+  keyDetails: string[];
+  isAnonymous: boolean;
+}
+
+export interface EncryptedMessage {
+  id: string;
+  messageId: string;
+  beforeEncryptionImageUrl: string | null;
+  beforeEncryptionText: string | null;
+  afterEncryptionImageUrl: string | null;
+  afterEncryptionText: string | null;
+  encryptionMethod: string;
+  messageSource: string;
+  messageDate: string;
+  postedAt: string;
+  decodingHints: string[];
+  isDecoded: boolean;
+  decodedContent: string | null;
 }
 
 export interface Suspect {
@@ -234,7 +303,7 @@ const apiFetch = async <T>(
   const token = getAuthToken();
   // Ensure endpoint starts with /
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-  const url = `https://localhost:7029${path}`;
+  const url = `${API_BASE_URL}${path}`;
 
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -253,7 +322,46 @@ const apiFetch = async <T>(
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`API Error: ${response.status} - ${errorText}`);
+      let errorMessage = `API Error: ${response.status}`;
+      try {
+        const errorJson = JSON.parse(errorText);
+        // FastEndpoints error format
+        if (errorJson.errors && Array.isArray(errorJson.errors)) {
+          errorMessage = errorJson.errors.join(', ');
+        } else if (errorJson.errors && typeof errorJson.errors === 'object') {
+          // Handle object with property errors
+          const errorMessages: string[] = [];
+          for (const key in errorJson.errors) {
+            if (Array.isArray(errorJson.errors[key])) {
+              errorMessages.push(`${key}: ${errorJson.errors[key].join(', ')}`);
+            } else {
+              errorMessages.push(`${key}: ${errorJson.errors[key]}`);
+            }
+          }
+          errorMessage = errorMessages.join('; ') || errorText;
+        } else if (errorJson.message) {
+          errorMessage = errorJson.message;
+        } else if (errorText) {
+          errorMessage = errorText;
+        }
+        // Log full error for debugging
+        console.error('API Error Details:', {
+          status: response.status,
+          statusText: response.statusText,
+          url: url,
+          errorJson,
+          errorText,
+        });
+      } catch {
+        errorMessage = errorText || errorMessage;
+        console.error('API Error (non-JSON):', {
+          status: response.status,
+          statusText: response.statusText,
+          url: url,
+          errorText,
+        });
+      }
+      throw new Error(errorMessage);
     }
 
     // Handle 204 No Content
@@ -296,10 +404,12 @@ export const userApi = {
 // Case endpoints
 export const caseApi = {
   getAllCases: async (): Promise<CaseListItem[]> => {
+    // Backend returns Guid as string in JSON
     return apiFetch<CaseListItem[]>('/api/cases');
   },
 
   getCaseDetail: async (caseId: string): Promise<CaseDetail> => {
+    // Backend returns Guid as string in JSON
     return apiFetch<CaseDetail>(`/cases/${caseId}`);
   },
 
@@ -318,17 +428,23 @@ export const caseApi = {
   },
 
   submitAnswer: async (data: SubmitAnswerRequest): Promise<SubmitAnswerResponse> => {
+    // Convert caseId string to Guid format for backend
+    const requestData = {
+      caseId: data.caseId,
+      submittedAnswer: data.submittedAnswer,
+    };
     return apiFetch<SubmitAnswerResponse>('/cases/submit', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(requestData),
     });
   },
 
   submitInference: async (
     caseId: string,
     data: SubmitInferenceRequest
-  ): Promise<SubmitInferenceResponse> => {
-    return apiFetch<SubmitInferenceResponse>(`/cases/${caseId}/submit-inference`, {
+  ): Promise<PlayerInference> => {
+    // Backend returns Guid as string in JSON
+    return apiFetch<PlayerInference>(`/cases/${caseId}/submit-inference`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
@@ -338,10 +454,12 @@ export const caseApi = {
 // Suspect endpoints
 export const suspectApi = {
   getSuspects: async (caseId: string): Promise<Suspect[]> => {
+    // Backend returns Guid as string in JSON
     return apiFetch<Suspect[]>(`/cases/${caseId}/suspects`);
   },
 
   getSuspectDetail: async (suspectId: string): Promise<SuspectDetail> => {
+    // Backend returns Guid as string in JSON
     return apiFetch<SuspectDetail>(`/suspects/${suspectId}`);
   },
 };
@@ -349,6 +467,7 @@ export const suspectApi = {
 // Clue endpoints
 export const clueApi = {
   unlockClue: async (clueId: string): Promise<Clue> => {
+    // Backend returns Guid as string in JSON
     return apiFetch<Clue>(`/clues/${clueId}/unlock`, {
       method: 'POST',
     });
@@ -358,6 +477,7 @@ export const clueApi = {
 // Leaderboard endpoints
 export const leaderboardApi = {
   getLeaderboard: async (): Promise<LeaderboardEntry[]> => {
+    // Backend returns Guid as string and TimeSpan as string in JSON
     return apiFetch<LeaderboardEntry[]>('/leaderboard');
   },
 };
@@ -365,6 +485,7 @@ export const leaderboardApi = {
 // Admin endpoints
 export const adminApi = {
   createCase: async (data: any): Promise<string> => {
+    // Backend returns Guid as string in JSON
     return apiFetch<string>('/admin/cases', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -372,6 +493,7 @@ export const adminApi = {
   },
 
   updateCase: async (caseId: string, data: any): Promise<string> => {
+    // Backend returns Guid as string in JSON
     return apiFetch<string>(`/admin/cases/${caseId}`, {
       method: 'PUT',
       body: JSON.stringify(data),
