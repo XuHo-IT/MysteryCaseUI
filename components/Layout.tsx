@@ -33,7 +33,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </main>
         <footer className="w-full py-6 border-t border-charcoal-dark/50 mt-auto bg-black/60 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-charcoal-light">
-            <p className="typewriter-font text-xs tracking-wider">© 2024 Detective Noir Agency • All Cases Classified</p>
+            <p className="typewriter-font text-xs tracking-wider">© 2026 Detective Noir - Xuho-IT • All Cases Classified</p>
             <div className="flex gap-4 mt-2 md:mt-0">
               <a href="#" className="hover:text-blood-red transition-colors typewriter-font text-xs tracking-wider">CLASSIFIED</a>
               <a href="#" className="hover:text-blood-red transition-colors typewriter-font text-xs tracking-wider">RESTRICTED</a>
