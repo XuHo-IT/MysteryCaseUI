@@ -128,7 +128,10 @@ export const SubmitAnswer: React.FC<SubmitAnswerProps> = ({ caseId, onSuccess })
           <button
             type="submit"
             disabled={loading || !answer.trim()}
-            className="w-full py-3 bg-primary text-black font-bold rounded-lg hover:bg-cyan-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-blood-red text-white font-bold rounded-lg hover:bg-blood-red-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed typewriter-font uppercase tracking-wider border-2 border-blood-red"
+            style={{
+              boxShadow: '0 0 20px rgba(220, 38, 38, 0.4)',
+            }}
           >
             {loading ? 'Đang gửi...' : 'Gửi câu trả lời'}
           </button>
@@ -194,7 +197,10 @@ export const SubmitAnswer: React.FC<SubmitAnswerProps> = ({ caseId, onSuccess })
           <button
             type="submit"
             disabled={loading || !inference.suspectedPerpetrator.trim() || !inference.perpetrationReasoning.trim()}
-            className="w-full py-3 bg-primary text-black font-bold rounded-lg hover:bg-cyan-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-blood-red text-white font-bold rounded-lg hover:bg-blood-red-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed typewriter-font uppercase tracking-wider border-2 border-blood-red"
+            style={{
+              boxShadow: '0 0 20px rgba(220, 38, 38, 0.4)',
+            }}
           >
             {loading ? 'Đang gửi...' : 'Gửi suy luận'}
           </button>

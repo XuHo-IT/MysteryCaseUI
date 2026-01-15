@@ -395,7 +395,10 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialData, onSubmit, isEdi
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-3 bg-primary text-black font-bold rounded-lg hover:bg-cyan-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-blood-red text-white font-bold rounded-lg hover:bg-blood-red-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed typewriter-font uppercase tracking-wider border-2 border-blood-red"
+            style={{
+              boxShadow: '0 0 20px rgba(220, 38, 38, 0.4)',
+            }}
           >
             {loading ? 'Đang xử lý...' : isEditing ? 'Cập nhật Vụ án' : 'Lưu & Xuất bản'}
           </button>

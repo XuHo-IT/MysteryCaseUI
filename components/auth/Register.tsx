@@ -41,7 +41,7 @@ export const Register: React.FC = () => {
         email: formData.email,
         password: formData.password,
       });
-      navigate('/');
+      navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Đăng ký thất bại. Vui lòng thử lại.');
     } finally {
@@ -51,69 +51,72 @@ export const Register: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)] p-4">
-      <div className="w-full max-w-md glass-panel rounded-xl p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-black text-white mb-2">Đăng ký</h1>
-          <p className="text-gray-400">Bắt đầu hành trình điều tra của bạn</p>
+      <div className="w-full max-w-md glass-panel rounded-xl p-8 relative">
+        {/* Mystery overlay effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blood-red/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 rounded-xl pointer-events-none"></div>
+        
+        <div className="text-center mb-8 relative z-10">
+          <h1 className="text-3xl font-black text-white mb-2 typewriter-font uppercase tracking-wider">Agent Registration</h1>
+          <p className="text-charcoal-light typewriter-font tracking-wide">Begin your investigation journey</p>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-sm">
+          <div className="mb-4 p-3 bg-blood-red/20 border border-blood-red/50 rounded-lg text-blood-red text-sm typewriter-font relative z-10">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Tên đăng nhập (tối thiểu 4 ký tự)
+            <label className="block text-sm font-medium text-charcoal-light mb-2 typewriter-font uppercase tracking-wider text-xs">
+              Username (min. 4 characters)
             </label>
             <input
               type="text"
               value={formData.username}
               onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-              className="w-full px-4 py-2 bg-surface-dark border border-gray-700 rounded-lg text-white focus:outline-none focus:border-primary"
+              className="w-full px-4 py-2 bg-charcoal-dark border border-charcoal-dark rounded-lg text-white focus:outline-none focus:border-blood-red transition-colors typewriter-font"
               required
               minLength={4}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-charcoal-light mb-2 typewriter-font uppercase tracking-wider text-xs">
               Email
             </label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-4 py-2 bg-surface-dark border border-gray-700 rounded-lg text-white focus:outline-none focus:border-primary"
+              className="w-full px-4 py-2 bg-charcoal-dark border border-charcoal-dark rounded-lg text-white focus:outline-none focus:border-blood-red transition-colors typewriter-font"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Mật khẩu (tối thiểu 6 ký tự)
+            <label className="block text-sm font-medium text-charcoal-light mb-2 typewriter-font uppercase tracking-wider text-xs">
+              Password (min. 6 characters)
             </label>
             <input
               type="password"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full px-4 py-2 bg-surface-dark border border-gray-700 rounded-lg text-white focus:outline-none focus:border-primary"
+              className="w-full px-4 py-2 bg-charcoal-dark border border-charcoal-dark rounded-lg text-white focus:outline-none focus:border-blood-red transition-colors typewriter-font"
               required
               minLength={6}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Xác nhận mật khẩu
+            <label className="block text-sm font-medium text-charcoal-light mb-2 typewriter-font uppercase tracking-wider text-xs">
+              Confirm Password
             </label>
             <input
               type="password"
               value={formData.confirmPassword}
               onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-              className="w-full px-4 py-2 bg-surface-dark border border-gray-700 rounded-lg text-white focus:outline-none focus:border-primary"
+              className="w-full px-4 py-2 bg-charcoal-dark border border-charcoal-dark rounded-lg text-white focus:outline-none focus:border-blood-red transition-colors typewriter-font"
               required
             />
           </div>
@@ -121,16 +124,16 @@ export const Register: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-primary text-black font-bold rounded-lg hover:bg-cyan-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-blood-red text-white font-bold rounded-lg hover:bg-blood-red-dark hover:shadow-glow-red transition-all disabled:opacity-50 disabled:cursor-not-allowed typewriter-font uppercase tracking-wider border-2 border-blood-red"
           >
-            {loading ? 'Đang đăng ký...' : 'Đăng ký'}
+            {loading ? 'REGISTERING...' : 'REGISTER'}
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-400">
-          Đã có tài khoản?{' '}
-          <Link to="/login" className="text-primary hover:underline">
-            Đăng nhập
+        <div className="mt-6 text-center text-sm text-charcoal-light typewriter-font relative z-10">
+          Already have credentials?{' '}
+          <Link to="/login" className="text-blood-red hover:underline font-bold">
+            LOGIN
           </Link>
         </div>
       </div>

@@ -72,7 +72,7 @@ export const InvestigationBoard: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-        <div className="text-primary text-xl">Đang tải...</div>
+        <div className="text-blood-red text-xl typewriter-font uppercase tracking-wider">Loading Investigation Board...</div>
       </div>
     );
   }
@@ -80,7 +80,7 @@ export const InvestigationBoard: React.FC = () => {
   if (error || !caseData) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-        <div className="text-red-400 text-xl">{error || 'Không tìm thấy vụ án'}</div>
+        <div className="text-blood-red text-xl typewriter-font uppercase tracking-wider">{error || 'Case Not Found'}</div>
       </div>
     );
   }
@@ -89,32 +89,32 @@ export const InvestigationBoard: React.FC = () => {
     <div className="flex flex-col flex-1 w-full max-w-[1600px] mx-auto p-4 md:p-6 gap-6 animate-fade-in">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-black text-white">
-            Bảng Điều tra: {caseData.title}
+          <h1 className="text-3xl md:text-4xl font-black text-white typewriter-font uppercase tracking-wider">
+            Investigation: {caseData.title}
           </h1>
-          <div className="flex items-center gap-4 mt-2">
+          <div className="flex items-center gap-4 mt-2 flex-wrap">
             <div className="flex items-center gap-2">
-              <span className="text-gray-400 text-sm">Điểm:</span>
-              <span className="text-primary font-bold">{caseData.userPoints}</span>
+              <span className="text-charcoal-light text-sm typewriter-font uppercase tracking-wider text-xs">Points:</span>
+              <span className="text-blood-red font-bold typewriter-font">{caseData.userPoints}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-gray-400 text-sm">Manh mối:</span>
-              <span className="text-primary font-bold">{caseData.cluesFoundCount}/{caseData.clues.length}</span>
+              <span className="text-charcoal-light text-sm typewriter-font uppercase tracking-wider text-xs">Clues:</span>
+              <span className="text-blood-red font-bold typewriter-font">{caseData.cluesFoundCount}/{caseData.clues.length}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-gray-400 text-sm">Trạng thái:</span>
-              <span className={`font-bold ${caseData.hasBeenSolved ? 'text-green-400' : 'text-yellow-400'}`}>
-                {caseData.hasBeenSolved ? 'Hoàn thành' : 'Đang tiến hành'}
+              <span className="text-charcoal-light text-sm typewriter-font uppercase tracking-wider text-xs">Status:</span>
+              <span className={`font-bold typewriter-font ${caseData.hasBeenSolved ? 'text-green-400' : 'text-blood-red'}`}>
+                {caseData.hasBeenSolved ? 'SOLVED' : 'IN PROGRESS'}
               </span>
             </div>
           </div>
         </div>
         <button
           onClick={() => navigate(`/case-detail/${caseId}`)}
-          className="px-4 py-2 rounded border border-red-500/50 text-red-400 hover:bg-red-500/10 text-sm font-bold flex items-center gap-2"
+          className="px-4 py-2 rounded border border-blood-red/50 text-blood-red hover:bg-blood-red/10 text-sm font-bold flex items-center gap-2 typewriter-font uppercase tracking-wider transition-all"
         >
           <span className="material-symbols-outlined">exit_to_app</span>
-          Thoát Vụ án
+          Exit Case
         </button>
       </div>
 
@@ -177,10 +177,10 @@ export const InvestigationBoard: React.FC = () => {
               {/* Action Button */}
               <div className="mt-auto pt-2">
                 <button
-                  className={`w-full h-10 rounded-lg text-sm font-bold transition-all ${
+                  className={`w-full h-10 rounded-lg text-sm font-bold transition-all typewriter-font uppercase tracking-wider ${
                     !clue.isUnlocked
-                      ? 'border border-primary/30 text-primary bg-primary/5 hover:bg-primary/20'
-                      : 'bg-primary text-black hover:bg-cyan-300 hover:shadow-glow-cyan'
+                      ? 'border border-blood-red/30 text-blood-red bg-blood-red/5 hover:bg-blood-red/20'
+                      : 'bg-blood-red text-white hover:bg-blood-red-dark hover:shadow-glow-red border-2 border-blood-red'
                   }`}
                   onClick={() => {
                     if (!clue.isUnlocked) {
@@ -201,40 +201,69 @@ export const InvestigationBoard: React.FC = () => {
 
         {/* Sidebar Tools */}
         <div className="w-full xl:w-96 flex flex-col gap-6">
-          <div className="sticky top-24 glass-panel rounded-xl p-4 min-h-[500px] flex flex-col">
-            {/* Tabs */}
-            <div className="flex bg-black/20 rounded-lg p-1 mb-4">
+          <div className="sticky top-24 rounded-xl p-4 min-h-[500px] flex flex-col" style={{
+            background: 'rgba(0, 0, 0, 0.85)',
+            border: '1px solid rgba(220, 38, 38, 0.2)',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+          }}>
+            {/* Tabs - Pure Black Background */}
+            <div className="flex bg-black/60 rounded-lg p-1 mb-4 border border-blood-red/10">
               <button
                 onClick={() => setActiveTab('notes')}
-                className={`flex-1 py-2 text-sm font-bold rounded shadow-sm flex items-center justify-center gap-2 transition-all ${
+                className={`flex-1 py-2 text-sm font-bold rounded shadow-sm flex items-center justify-center gap-2 transition-all typewriter-font uppercase tracking-wider text-xs ${
                   activeTab === 'notes'
-                    ? 'text-primary bg-surface-dark'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'text-blood-red bg-black border border-blood-red/30'
+                    : 'text-charcoal-light hover:text-blood-red'
                 }`}
               >
-                <span className="material-symbols-outlined !text-lg">edit_note</span>
+                <span 
+                  className="material-symbols-outlined !text-lg transition-all duration-300"
+                  style={{
+                    transform: activeTab === 'notes' ? 'rotate(360deg) scale(1.2)' : 'rotate(0deg) scale(1)',
+                    filter: activeTab === 'notes' ? 'drop-shadow(0 0 8px rgba(220, 38, 38, 0.8))' : 'none',
+                  }}
+                >
+                  edit_note
+                </span>
                 Ghi chú
               </button>
               <button
                 onClick={() => setActiveTab('suspects')}
-                className={`flex-1 py-2 text-sm font-bold rounded shadow-sm flex items-center justify-center gap-2 transition-all ${
+                className={`flex-1 py-2 text-sm font-bold rounded shadow-sm flex items-center justify-center gap-2 transition-all typewriter-font uppercase tracking-wider text-xs ${
                   activeTab === 'suspects'
-                    ? 'text-primary bg-surface-dark'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'text-blood-red bg-black border border-blood-red/30'
+                    : 'text-charcoal-light hover:text-blood-red'
                 }`}
               >
-                <span className="material-symbols-outlined !text-lg">person_search</span>
+                <span 
+                  className="material-symbols-outlined !text-lg transition-all duration-300"
+                  style={{
+                    transform: activeTab === 'suspects' ? 'scale(1.2)' : 'scale(1)',
+                    animation: activeTab === 'suspects' ? 'pulse-slow 2s ease-in-out infinite' : 'none',
+                    filter: activeTab === 'suspects' ? 'drop-shadow(0 0 8px rgba(220, 38, 38, 0.8))' : 'none',
+                  }}
+                >
+                  person_search
+                </span>
                 Nghi phạm
               </button>
               <button
                 onClick={() => setActiveTab('submit')}
-                className={`flex-1 py-2 text-sm font-bold rounded shadow-sm flex items-center justify-center gap-2 transition-all ${
+                className={`flex-1 py-2 text-sm font-bold rounded shadow-sm flex items-center justify-center gap-2 transition-all typewriter-font uppercase tracking-wider text-xs ${
                   activeTab === 'submit'
-                    ? 'text-primary bg-surface-dark'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'text-blood-red bg-black border border-blood-red/30'
+                    : 'text-charcoal-light hover:text-blood-red'
                 }`}
               >
-                <span className="material-symbols-outlined !text-lg">gavel</span>
+                <span 
+                  className="material-symbols-outlined !text-lg transition-all duration-300"
+                  style={{
+                    transform: activeTab === 'submit' ? 'scale(1.2) rotate(15deg)' : 'scale(1) rotate(0deg)',
+                    filter: activeTab === 'submit' ? 'drop-shadow(0 0 8px rgba(220, 38, 38, 0.8))' : 'none',
+                  }}
+                >
+                  gavel
+                </span>
                 Giải đáp
               </button>
             </div>
@@ -296,7 +325,7 @@ export const InvestigationBoard: React.FC = () => {
                           </p>
                         </div>
                         {suspect.isPrimarySuspect && (
-                          <span className="material-symbols-outlined text-red-400 text-lg">priority_high</span>
+                          <span className="material-symbols-outlined text-blood-red text-lg">priority_high</span>
                         )}
                       </div>
                     ))
