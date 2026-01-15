@@ -421,7 +421,7 @@ export const Landing: React.FC = () => {
         {/* Atmospheric Footer */}
         <footer className="py-8 px-6 border-t border-charcoal-dark/50 text-center">
           <p className="typewriter-font text-xs text-charcoal-light tracking-[0.3em] uppercase">
-            © 2024 Detective Noir Agency • All Cases Classified
+            © 2026 Detective Noir - Xuho-IT • All Cases Classified
           </p>
         </footer>
       </div>
