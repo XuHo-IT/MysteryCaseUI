@@ -33,7 +33,7 @@ export const Dashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-        <div className="text-primary text-xl">Đang tải...</div>
+        <div className="text-blood-red text-xl typewriter-font uppercase tracking-wider">Loading Case Files...</div>
       </div>
     );
   }
@@ -41,7 +41,7 @@ export const Dashboard: React.FC = () => {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-        <div className="text-red-400 text-xl">{error}</div>
+        <div className="text-blood-red text-xl typewriter-font uppercase tracking-wider">{error}</div>
       </div>
     );
   }
@@ -49,28 +49,28 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="flex flex-col flex-1 max-w-7xl mx-auto w-full p-6 md:p-10 gap-8 animate-fade-in">
       <div className="flex flex-col gap-3">
-        <h1 className="text-white text-4xl md:text-5xl font-black leading-tight tracking-tight">
-          Bảng Điều Tra Vụ Án
+        <h1 className="text-white text-4xl md:text-5xl font-black leading-tight tracking-wider typewriter-font uppercase">
+          Case Files Archive
         </h1>
-        <p className="text-gray-400 text-lg">
-          Chọn một vụ án để bắt đầu cuộc điều tra của bạn.
+        <p className="text-charcoal-light text-lg typewriter-font tracking-wide">
+          Select a case to begin your investigation.
         </p>
       </div>
 
-      {/* Search */}
+      {/* Search - Styled as Evidence Search */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-grow relative group">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <span className="material-symbols-outlined text-primary/70 group-focus-within:text-primary transition-colors">
+            <span className="material-symbols-outlined text-blood-red/70 group-focus-within:text-blood-red transition-colors">
               search
             </span>
           </div>
           <input
             type="text"
-            placeholder="Tìm kiếm vụ án theo tên..."
+            placeholder="Search case files..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full h-12 pl-12 pr-4 bg-surface-dark/50 border border-primary/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/60 transition-all"
+            className="w-full h-12 pl-12 pr-4 bg-charcoal-dark/80 border border-blood-red/20 rounded-lg text-white placeholder-charcoal-light focus:outline-none focus:border-blood-red/60 focus:ring-1 focus:ring-blood-red/60 transition-all typewriter-font"
           />
         </div>
       </div>
@@ -78,8 +78,8 @@ export const Dashboard: React.FC = () => {
       {/* Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {filteredCases.length === 0 ? (
-          <div className="col-span-2 text-center py-12 text-gray-400">
-            Không tìm thấy vụ án nào
+          <div className="col-span-2 text-center py-12 text-charcoal-light typewriter-font uppercase tracking-wider">
+            No Cases Found
           </div>
         ) : (
           filteredCases.map((caseItem) => (
@@ -90,37 +90,37 @@ export const Dashboard: React.FC = () => {
             >
               <div className="p-6 flex flex-col gap-4 h-full">
                 <div className="flex justify-between items-start gap-2">
-                  <h3 className="text-white text-2xl font-bold leading-tight group-hover:text-primary transition-colors">
+                  <h3 className="text-white text-2xl font-bold leading-tight group-hover:text-blood-red transition-colors typewriter-font">
                     {caseItem.title}
                   </h3>
                   <div
-                    className={`text-xs font-bold py-1 px-3 uppercase rounded-full ${
+                    className={`text-xs font-bold py-1 px-3 uppercase rounded-full typewriter-font tracking-wider ${
                       caseItem.isSolved
-                        ? 'text-gray-400 bg-gray-700/30'
-                        : 'text-primary bg-primary/10 border border-primary/20'
+                        ? 'text-charcoal-light bg-charcoal/30 border border-charcoal-dark'
+                        : 'text-blood-red bg-blood-red/10 border border-blood-red/30'
                     }`}
                   >
-                    {caseItem.isSolved ? 'Đã giải' : 'Chưa giải'}
+                    {caseItem.isSolved ? 'CLOSED' : 'ACTIVE'}
                   </div>
                 </div>
-                <p className="text-gray-400 text-sm flex-grow leading-relaxed">
+                <p className="text-charcoal-light text-sm flex-grow leading-relaxed">
                   {caseItem.description}
                 </p>
 
                 <div className="flex flex-col gap-2 mt-4">
-                  <div className="flex justify-between text-xs text-gray-400 font-mono uppercase tracking-wider">
-                    <span>Độ khó: {caseItem.difficultyLevel}</span>
+                  <div className="flex justify-between text-xs text-charcoal-light typewriter-font uppercase tracking-wider">
+                    <span>DIFFICULTY: {caseItem.difficultyLevel}</span>
                   </div>
                 </div>
 
                 <button
-                  className={`mt-4 w-full h-10 rounded-lg font-bold text-sm tracking-wide transition-all ${
+                  className={`mt-4 w-full h-10 rounded-lg font-bold text-sm tracking-wider transition-all typewriter-font uppercase ${
                     caseItem.isSolved
-                      ? 'bg-gray-800 text-gray-500 cursor-not-allowed border border-gray-700'
-                      : 'bg-primary text-black hover:bg-cyan-300 hover:shadow-glow-cyan'
+                      ? 'bg-charcoal-dark text-charcoal-light cursor-not-allowed border border-charcoal-dark'
+                      : 'bg-blood-red text-white hover:bg-blood-red-dark hover:shadow-glow-red border-2 border-blood-red'
                   }`}
                 >
-                  {caseItem.isSolved ? 'XEM LẠI VỤ ÁN' : 'BẮT ĐẦU ĐIỀU TRA'}
+                  {caseItem.isSolved ? 'REVIEW CASE' : 'BEGIN INVESTIGATION'}
                 </button>
               </div>
             </div>

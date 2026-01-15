@@ -84,7 +84,11 @@ export const ClueDetail: React.FC = () => {
                 Xem xét kỹ lưỡng từng chi tiết để tìm ra manh mối.
               </p>
             </div>
-            <div className="rounded-xl glass-panel shadow-glow-cyan p-6 lg:p-8">
+            <div className="rounded-xl p-6 lg:p-8" style={{
+              background: 'rgba(0, 0, 0, 0.85)',
+              border: '1px solid rgba(220, 38, 38, 0.2)',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+            }}>
               {clue.imageUrl && (
                 <div className="mb-6">
                   <img
@@ -125,7 +129,10 @@ export const ClueDetail: React.FC = () => {
                 </div>
                 <button
                   onClick={handleSaveNotes}
-                  className="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#101818] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-cyan-300 transition-colors shadow-glow-cyan"
+                  className="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-blood-red text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-blood-red-dark transition-colors typewriter-font uppercase tracking-wider border-2 border-blood-red"
+                  style={{
+                    boxShadow: '0 0 20px rgba(220, 38, 38, 0.4)',
+                  }}
                 >
                   <span className="truncate">Lưu Ghi chú</span>
                 </button>

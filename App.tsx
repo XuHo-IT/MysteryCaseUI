@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { Layout } from './components/Layout';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { Landing } from './components/pages/Landing';
 import { Dashboard } from './components/pages/Dashboard';
 import { CaseDetail } from './components/pages/CaseDetail';
 import { InvestigationBoard } from './components/pages/InvestigationBoard';
@@ -24,7 +25,8 @@ const App: React.FC = () => {
         <Layout>
           <Routes>
             {/* Public routes */}
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/history" element={<CaseHistory />} />
