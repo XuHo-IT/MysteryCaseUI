@@ -197,10 +197,3 @@ Tất cả API calls được quản lý trong `services/api.ts`:
 4. Push to the branch
 5. Open a Pull Request
 
-## 📄 License
-
-[Thêm license nếu có]
-
-## 📧 Contact
-
-[Thêm thông tin liên hệ nếu cần]
