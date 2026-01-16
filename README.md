@@ -34,26 +34,14 @@ cd MysteryCaseUI
 npm install
 ```
 
-3. **Cấu hình API endpoint**
-
-Cập nhật file `services/api.ts`:
-```typescript
-const API_BASE_URL = 'https://mysterycaseapi.onrender.com';
-```
-
-Cập nhật file `services/chatService.ts`:
-```typescript
-const API_BASE_URL = "https://mysterycaseapi.onrender.com";
-```
-
-4. **Chạy development server**
+3. **Chạy development server**
 ```bash
 npm run dev
 ```
 
 Ứng dụng sẽ chạy tại: `http://localhost:5173`
 
-5. **Build cho production**
+4. **Build cho production**
 ```bash
 npm run build
 ```
